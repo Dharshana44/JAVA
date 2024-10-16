@@ -1,0 +1,90 @@
+import java.util.Scanner;
+// Queue class definition
+class Queue {
+private int maxSize = 10; // Maximum size of the queue
+private int[] queueArray; // Array to hold queue elements
+private int front; // Index of the front element
+private int rear; // Index of the rear element
+private int nItems; // Number of items in the queue
+// Constructor to initialize the queue
+public Queue() {
+queueArray = new int[maxSize]; // Initialize the queue array
+front = 0; // Front index
+rear = -1; // Rear index
+nItems = 0; // Initially, the queue is empty
+}
+// Method to enqueue an element
+public void enqueue(int value) {
+if (nItems == maxSize) {
+System.out.println("Queue is full. Unable to enqueue " + value);
+} else {
+rear = (rear + 1) % maxSize; // Circular increment
+queueArray[rear] = value; // Add value to the queue
+nItems++; // Increase the count of items
+System.out.println("Enqueued: " + value);
+}
+}
+// Method to dequeue an element
+public int dequeue() {
+if (nItems == 0) {
+System.out.println("Queue is empty. Unable to dequeue.");
+return -1; // Indicating that the queue is empty
+} else {
+int dequeuedValue = queueArray[front]; // Get the front value
+front = (front + 1) % maxSize; // Circular increment
+nItems--; // Decrease the count of items
+return dequeuedValue; // Return the dequeued value
+}
+}
+// Method to display the elements in the queue
+public void display() {
+if (nItems == 0) {
+System.out.println("Queue is empty.");
+} else {
+System.out.print("Queue elements: ");
+for (int i = 0; i < nItems; i++) {
+System.out.print(queueArray[(front + i) % maxSize] + " ");
+}
+System.out.println();
+}
+}
+}
+// Main class to demonstrate queue operations
+public class QueueDemo {
+public static void main(String[] args) {
+Scanner scanner = new Scanner(System.in);
+Queue queue = new Queue(); // Create an instance of Queue
+// Menu-driven input for queue operations
+while (true) {
+System.out.println("\nQueue Operations:");
+System.out.println("1. Enqueue");
+System.out.println("2. Dequeue");
+System.out.println("3. Display");
+System.out.println("4. Exit");
+System.out.print("Choose an operation: ");
+int choice = scanner.nextInt();
+switch (choice) {
+case 1: // Enqueue operation
+System.out.print("Enter a value to enqueue: ");
+int value = scanner.nextInt();
+queue.enqueue(value);
+break;
+case 2: // Dequeue operation
+int dequeuedValue = queue.dequeue();
+if (dequeuedValue != -1) {
+System.out.println("Dequeued: " + dequeuedValue);
+}
+break;
+case 3: // Display queue
+queue.display();
+break;
+case 4: // Exit
+System.out.println("Exiting...");
+scanner.close();
+return; // Exit the program
+default:
+System.out.println("Invalid choice. Please try again.");
+}
+}
+}
+}
